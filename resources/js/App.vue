@@ -15,7 +15,7 @@ export default {
                     text,
                 });
                 // After posting, retrieve messages to include the new one
-                this.getMessages();
+                await this.getMessages();
             } catch (err) {
                 console.log(err.message);
             }
@@ -34,8 +34,6 @@ export default {
             if (this.newMessage.trim() !== "") {
                 this.postMessage(this.newMessage.trim());
                 this.newMessage = "";
-            } else {
-                return;
             }
         },
         scrollToBottom() {
@@ -67,6 +65,7 @@ export default {
             </div>
         </div>
         <div class="input-area">
+            ishonmasangiz mana
             <input v-model="newMessage" @keyup.enter="sendMessage" type="text"
                    placeholder="Type your message here..." />
             <button @click="sendMessage">Send</button>

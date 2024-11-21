@@ -13,6 +13,8 @@ services:
             - postgres
         ports:
             - "8080:8080"
+#        command: >
+#            sh -c "php artisan reverb:start && php artisan queue:listen"
 
     postgres:
         image: postgres
