@@ -11,7 +11,7 @@ class Message extends Model
     use HasFactory;
 
     public    $table    = 'messages';
-    protected $fillable = ['id', 'user_id', 'text'];
+    protected $fillable = ['id', 'user_id', 'room_id', 'text'];
 
     public function user(): BelongsTo
     {
@@ -24,5 +24,10 @@ class Message extends Model
             "d M Y, H:i:s",
             strtotime($this->attributes['created_at'])
         );
+    }
+
+    public function room(): BelongsTo
+    {
+        return $this->belongsTo(Room::class);
     }
 }
