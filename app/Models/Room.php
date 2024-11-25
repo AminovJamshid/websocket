@@ -17,4 +17,9 @@ class Room extends Model
     {
         return $this->hasMany(Message::class, 'room_id', 'id');
     }
+
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'room_user');
+    }
 }

@@ -61,6 +61,8 @@ RUN { \
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+ARG user
+ARG bin
 
 # Create system user to run Composer and Artisan Commands
 RUN useradd -G www-data,root -u 1000 -d /home/dev dev

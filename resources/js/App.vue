@@ -58,7 +58,12 @@ export default {
     created() {
         // this.getMessages();
 
-        window.Echo.private("channel_for_everyone")
+        // window.Echo.private("channel_for_everyone")
+        //     .listen('GotMessage', (e) => {
+        //         this.getMessages();
+        //     });
+
+        window.Echo.private("room.1")
             .listen('GotMessage', (e) => {
                 this.getMessages();
             });
