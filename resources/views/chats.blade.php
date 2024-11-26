@@ -15,7 +15,9 @@
                     <div id="app">
                         <app
                             :is-auth="{{ json_encode(auth()->check()) }}"
-                            :user="{{ auth()->check() ? auth()->user() : 'null' }}">></app>
+                            :user="{{ auth()->check() ? auth()->user() : 'null' }}"
+                            :rooms="{{auth()->user()->rooms}}">
+                        </app>
                     </div>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout

@@ -3,11 +3,14 @@ import axios from 'axios';
 import {ref} from 'vue';
 
 export default {
+    props: {
+        user: {},
+        rooms: Array
+    },
     data() {
         return {
             messages: ref([]),
             newMessage: "",
-            rooms: []
         };
     },
     methods: {
@@ -46,40 +49,36 @@ export default {
                 }
             });
         },
-        async getRooms() {
-            const response = await axios.get('http://localhost:9000/api/rooms');
-            this.rooms = response.data;
+        async getRooms(userId) {
+            const response = await axios.get(`http://localhost:9000/api/users/${userId}/rooms`);
+            this.rooms.value = response.data;
         },
         async getRoomMessages(id) {
-            const response = await axios.get('http://localhost:9000/api/rooms/'+id+'/messages');
+            const response = await axios.get('http://localhost:9000/api/rooms/' + id + '/messages');
             this.messages = response.data;
         }
     },
     created() {
-        // this.getMessages();
+        this.getRooms(this.user.id)
 
-        // window.Echo.private("channel_for_everyone")
-        //     .listen('GotMessage', (e) => {
-        //         this.getMessages();
-        //     });
-
-        window.Echo.private("room.1")
-            .listen('GotMessage', (e) => {
-                this.getMessages();
-            });
-
-        this.getRooms()
+        this.rooms.map(room => {
+            window.Echo.private(`room.${room.id}`)
+                .listen('GotMessage', (e) => {
+                    this.getMessages();
+                });
+        })
     },
 };
 </script>
 
 <template>
     <div class="container">
-        <ul class="rooms-list">
-            <li v-for="room in rooms"
+        <div v-if="!this.rooms.length" class="error-message">Sizda chatlar yo'q</div>
+        <ul v-else class="rooms-list">
+            <li v-for="room in this.rooms"
                 class="room">
                 <button @click="getRoomMessages(room.id)">
-                    {{room.id}}
+                    {{ room.id }} - {{ room.type }}
                 </button>
             </li>
         </ul>
