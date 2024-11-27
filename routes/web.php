@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\GetUsers;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('chats');
 });
+Route::get('/users', GetUsers::class);
 
 Auth::routes();
 
