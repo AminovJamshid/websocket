@@ -17,7 +17,7 @@
                                 <div class="p-2 max-h-[482px] min-h-[482px]" data-simplebar>
                                     <a v-for="chat in store.chats"
                                        :key="chat.id"
-                                       @click="getMessages(chat.id)"
+                                       @click="store.getMessages(chat.id)"
                                        class="flex items-center p-2 rounded-md relative bg-gray-50 dark:bg-slate-800">
                                         <div class="relative">
                                             <img src="assets/images/client/09.jpg"
@@ -82,7 +82,7 @@
 
                                 <ul class="p-4 list-none mb-0 max-h-[548px]" data-simplebar>
 
-                                    <li class="text-end">
+                                    <li v-for="message in store.messages" class="text-end">
                                         <div class="inline-block">
                                             <div class="flex mb-3">
                                                 <div class="relative order-2">
@@ -95,36 +95,9 @@
 
                                                 <div class="me-2 max-w-lg">
                                                     <p class="bg-white dark:bg-slate-900 text-slate-400 text-[16px] shadow dark:shadow-gray-700 px-3 py-2 rounded mb-1">
-                                                        Welcome</p>
+                                                        {{message.text}}</p>
                                                     <span class="text-slate-400 text-sm"><i
                                                         class="mdi mdi-clock-outline me-1"></i>15 min ago</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="inline-block">
-                                            <div class="flex items-center mb-3">
-                                                <div class="relative">
-                                                    <img src="assets/images/client/01.jpg"
-                                                         class="size-9 min-w-[36px] rounded-full shadow dark:shadow-gray-700"
-                                                         alt="">
-                                                    <span
-                                                        class="absolute top-0.5 start-0.5 flex items-center justify-center bg-green-600 text-white text-[10px] font-bold rounded-full size-2 after:content-[''] after:absolute after:h-2 after:w-2 after:bg-green-600 after:top-0 after:end-0 after:rounded-full after:animate-ping"></span>
-                                                </div>
-
-                                                <div class="ms-2 max-w-lg">
-                                                    <p class="text-slate-400 text-sm rounded mb-1">Cristino is typing
-                                                        <span class="animate-typing ms-1">
-                                                                <span
-                                                                    class="dot inline-block size-1 bg-slate-400 -mr-px opacity-60 rounded-full"></span>
-                                                                <span
-                                                                    class="dot inline-block size-1 bg-slate-400 -mr-px opacity-60 rounded-full"></span>
-                                                                <span
-                                                                    class="dot inline-block size-1 bg-slate-400 -mr-px opacity-60 rounded-full"></span>
-                                                            </span>
-                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -172,27 +145,12 @@ const props = defineProps({
 })
 
 let users = reactive([])
-let messages = reactive([])
-let chats = ref([])
-
-const getChats = async (userId) => {
-    const response = await axios.get(`http://localhost:9000/users/${userId}/chats`);
-    chats = response.data;
-}
 
 const getUsers = async () => {
     const response = await axios.get(`http://localhost:9000/users`);
     users = response.data;
 }
 
-const getMessages = async (chatId) => {
-    try {
-        const response = await axios.get(`/chats/${chatId}/messages`);
-        messages = response.data;
-    } catch (err) {
-        console.log(err.message);
-    }
-}
 
 onMounted(async () => {
     await store.getChats(props.user.id)
