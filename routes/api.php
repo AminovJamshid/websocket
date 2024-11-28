@@ -10,9 +10,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/users/{userId}/rooms', function ($userId) {
-    return (new GetUserRooms())($userId);
-});
 
 //Route::get('/users', GetUsers::class);
 

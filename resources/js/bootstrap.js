@@ -40,3 +40,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 import './echo';
+import '../assets/js/plugins.init.js'
+import '../assets/js/jsvectormap.init.js'
+import '../assets/js/app.js'

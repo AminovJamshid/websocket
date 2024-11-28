@@ -1,0 +1,31 @@
+/* Template Name: Hously - Tailwind CSS Real Estate Landing & Admin Dashboard Template
+   Author: Shreethemes
+   Email: support@shreethemes.in
+   Website: https://shreethemes.in
+   Version: 2.3.0
+   Created: May 2022
+   File: Main Css File
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// FONTS
+@import "custom/fonts";
+
+// general
+@import "custom/general";
+
+// structure
+@import "custom/structure/topnav";
+@import "custom/structure/footer";
+
+// components
+@import "components/buttons";
+
+// pages
+@import "custom/pages/helper";
+@import "custom/pages/countdown";
+@import "custom/pages/portfolio";
+

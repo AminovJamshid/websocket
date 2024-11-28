@@ -1,8 +1,10 @@
 <script>
 import axios from 'axios';
 import {ref} from 'vue';
+import Chat from "./components/Chat.vue";
 
 export default {
+    components: {Chat},
     props: {
         user: {},
         rooms: Array,
@@ -94,7 +96,8 @@ export default {
 </script>
 
 <template>
-    <div class="container">
+    <Chat/>
+<!--    <div class="container">
         <ul class="users-list">
             <li v-for="user in this.users.value" :key="user.id" class="users">
                 <button @click="startChat(user)">{{ user.name }}</button>
@@ -122,7 +125,7 @@ export default {
                    placeholder="Type your message here..."/>
             <button @click="sendMessage">Send</button>
         </div>
-    </div>
+    </div>-->
 </template>
 
 <style scoped>
