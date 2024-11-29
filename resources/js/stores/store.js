@@ -7,6 +7,7 @@ export const useChatStore = defineStore('chat', () => {
     const messages = ref([])
     const textInput = ref('')
     const activeChat = ref({})
+    const user = ref({})
 
     const getChats = async (userId) => {
         const response = await axios.get(`http://localhost:9000/users/${userId}/chats`);
@@ -45,6 +46,7 @@ export const useChatStore = defineStore('chat', () => {
         messages,
         textInput,
         activeChat,
+        user,
         getChats,
         getMessages,
         sendMessage
