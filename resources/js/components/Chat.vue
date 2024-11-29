@@ -17,7 +17,7 @@
                                 <div class="p-2 max-h-[482px] min-h-[482px]" data-simplebar>
                                     <a v-for="chat in store.chats"
                                        :key="chat.id"
-                                       @click="store.getMessages(chat.id)"
+                                       @click="store.getMessages(chat)"
                                        class="flex items-center p-2 rounded-md relative bg-gray-50 dark:bg-slate-800">
                                         <div class="relative">
                                             <img src="assets/images/client/09.jpg"
@@ -80,8 +80,7 @@
                                     </div>
                                 </div>
 
-                                <ul class="p-4 list-none mb-0 max-h-[548px]" data-simplebar>
-
+                                <ul class="p-4 list-none mb-0 max-h-[548px] overflow-scroll" data-simplebar>
                                     <li v-for="message in store.messages" class="text-end">
                                         <div class="inline-block">
                                             <div class="flex mb-3">
@@ -95,7 +94,7 @@
 
                                                 <div class="me-2 max-w-lg">
                                                     <p class="bg-white dark:bg-slate-900 text-slate-400 text-[16px] shadow dark:shadow-gray-700 px-3 py-2 rounded mb-1">
-                                                        {{message.text}}</p>
+                                                        {{ message.text }}</p>
                                                     <span class="text-slate-400 text-sm"><i
                                                         class="mdi mdi-clock-outline me-1"></i>15 min ago</span>
                                                 </div>
@@ -106,20 +105,19 @@
 
                                 <div class="p-2 border-t border-gray-100 dark:border-gray-800">
                                     <div class="flex ">
-                                        <input type="text"
+                                        <input v-model="store.textInput"
+                                               @keyup.enter="store.sendMessage()"
+                                               type="text"
                                                class="form-input w-full py-2 px-3 h-9 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0"
                                                placeholder="Enter Message...">
 
                                         <div class="min-w-[125px] text-end">
-                                            <a href="#"
-                                               class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[16px] text-center bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700 text-white rounded-md"><i
-                                                class="mdi mdi-send"></i></a>
-                                            <a href="#"
-                                               class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[16px] text-center bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700 text-white rounded-md"><i
-                                                class="mdi mdi-emoticon-happy-outline"></i></a>
-                                            <a href="#"
-                                               class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[16px] text-center bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700 text-white rounded-md"><i
-                                                class="mdi mdi-paperclip"></i></a>
+                                            <button
+                                                @click.prevent="store.sendMessage()"
+                                                class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[16px] text-center bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700 text-white rounded-md">
+                                                <i class="mdi mdi-send"></i> send
+                                            </button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -129,6 +127,18 @@
                 </div>
             </div>
         </main>
+    </div>
+    <div class="fixed top-[30%] -end-2 z-50">
+    <span class="relative inline-block rotate-90">
+        <input type="checkbox" class="checkbox opacity-0 absolute" id="chk"/>
+        <label
+            class="label bg-slate-900 dark:bg-white shadow dark:shadow-gray-700 cursor-pointer rounded-full flex justify-between items-center p-1 w-14 h-8"
+            for="chk">
+            <i data-feather="moon" class="size-[18px] text-yellow-500"></i>
+            <i data-feather="sun" class="size-[18px] text-yellow-500"></i>
+            <span class="ball bg-white dark:bg-slate-900 rounded-full absolute top-[2px] left-[2px] size-7"></span>
+        </label>
+    </span>
     </div>
 </template>
 
