@@ -56,7 +56,7 @@
                                 </div>
 
                                 <MessageList :messages="store.messages"/>
-                                
+
                                 <div class="p-2 border-t border-gray-100 dark:border-gray-800">
                                     <div class="flex ">
                                         <input v-model="store.textInput"
@@ -113,6 +113,13 @@ const props = defineProps({
 onMounted(async () => {
     store.user.value = props.user
     await store.getChats(props.user.id)
+
+    store.chats.map(chat => {
+        window.Echo.private(`room.${chat.id}`)
+            .listen('GotMessage', (e) => {
+                store.getMessages(chat)
+            });
+    })
 })
 
 </script>
