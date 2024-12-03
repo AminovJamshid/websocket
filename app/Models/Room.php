@@ -8,6 +8,9 @@ class Room extends Model
 {
     protected $fillable = ['type'];
 
+    const string PRIVATE = 'private';
+    const string GROUP   = 'group';
+
     public function members(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class);

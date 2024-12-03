@@ -17,8 +17,8 @@ class GotMessage implements ShouldBroadcast
     {
     }
 
-    public function broadcastOn()
+    public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel("room.1");
+        return new PrivateChannel("room.{$this->message->room_id}");
     }
 }

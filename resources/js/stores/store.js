@@ -8,6 +8,7 @@ export const useChatStore = defineStore('chat', () => {
     const textInput = ref('')
     const activeChat = ref({})
     const user = ref({})
+    const users = ref({})
 
     const getChats = async (userId) => {
         const response = await axios.get(`http://localhost:9000/users/${userId}/chats`);
@@ -34,6 +35,13 @@ export const useChatStore = defineStore('chat', () => {
             const text = textInput.value.trim()
             const data = {text, chatId}
 
+            if (chatId === 'new') {
+                data.user = activeChat.value.users[0]
+                await axios.post(`/chats`, data)
+                textInput.value = ''
+                return;
+            }
+
             await axios.post(`/chats/${chatId}/messages`, data)
 
             textInput.value = ''
@@ -44,7 +52,30 @@ export const useChatStore = defineStore('chat', () => {
 
     const hideActiveChat = () => {
         activeChat.value = {}
-        console.log('escape bosildi!')
+        messages.value = []
+    }
+
+    const getUsers = async () => {
+        try {
+            const response = await axios.get(`/users`);
+            users.value = response.data;
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    const openNewChat = user => {
+        activeChat.value = {
+            id: 'new',
+            type: 'private',
+            users: [
+                {
+                    id: user.id,
+                    name: user.name
+                }
+            ]
+        }
+        messages.value = []
     }
 
     return {
@@ -53,9 +84,12 @@ export const useChatStore = defineStore('chat', () => {
         textInput,
         activeChat,
         user,
+        users,
         getChats,
         getMessages,
         sendMessage,
-        hideActiveChat
+        hideActiveChat,
+        getUsers,
+        openNewChat
     }
 })

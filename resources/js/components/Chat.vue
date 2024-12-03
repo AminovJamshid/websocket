@@ -8,6 +8,16 @@
                         <div class="xl:col-span-3 lg:col-span-5 md:col-span-5">
                             <div tabindex="0" class="rounded-md shadow dark:shadow-gray-700 bg-white dark:bg-slate-900">
                                 <MiniProfile :user="user"/>
+                                <ul>
+                                    <li v-for="user in store.users"
+                                        :key="user.id"
+                                        class="pb-2"
+                                        @click="store.openNewChat(user)"
+                                    >
+                                        {{user.name}}
+                                    </li>
+                                </ul>
+                                <hr>
                                 <ChatList :chats="store.chats"/>
                             </div>
                         </div>
@@ -65,6 +75,7 @@ const props = defineProps({
 onMounted(async () => {
     store.user.value = props.user
     await store.getChats(props.user.id)
+    await store.getUsers()
 
     store.chats.map(chat => {
         window.Echo.private(`room.${chat.id}`)
