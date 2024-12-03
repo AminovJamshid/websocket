@@ -18,7 +18,7 @@ export const useChatStore = defineStore('chat', () => {
         try {
             const response = await axios.get(`/chats/${chat.id}/messages`);
             messages.value = response.data;
-            activeChat.value = chat
+            activeChat.value = chat;
         } catch (err) {
             console.log(err.message);
         }
@@ -41,6 +41,12 @@ export const useChatStore = defineStore('chat', () => {
             console.log(err.message);
         }
     }
+
+    const hideActiveChat = () => {
+        activeChat.value = {}
+        console.log('escape bosildi!')
+    }
+
     return {
         chats,
         messages,
@@ -49,6 +55,7 @@ export const useChatStore = defineStore('chat', () => {
         user,
         getChats,
         getMessages,
-        sendMessage
+        sendMessage,
+        hideActiveChat
     }
 })
