@@ -77,6 +77,12 @@ onMounted(async () => {
     await store.getChats(props.user.id)
     await store.getUsers()
 
+    window.Echo.private(`user.${store.user.value.id}`)
+        .listen('GotNewChat', data=>{
+            console.log(data)
+            store.chats.push(data.room)
+        })
+
     store.chats.map(chat => {
         window.Echo.private(`room.${chat.id}`)
             .listen('GotMessage', (e) => {
