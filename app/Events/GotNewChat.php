@@ -18,10 +18,11 @@ class GotNewChat implements ShouldBroadcast
     {
     }
 
-    public function broadcastOn(): PrivateChannel
+    public function broadcastOn(): array
     {
-        // 1. Send to multiple channels
-        //
-        return new PrivateChannel("user.{$this->room->users()->latest()->first()->id}");
+        return [
+            new PrivateChannel("user.{$this->room->users()->first()->id}"),
+            new PrivateChannel("user.{$this->room->users()->latest()->first()->id}"),
+        ];
     }
 }

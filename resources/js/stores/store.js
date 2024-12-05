@@ -6,7 +6,7 @@ export const useChatStore = defineStore('chat', () => {
     const chats = ref([])
     const messages = ref([])
     const textInput = ref('')
-    const activeChat = ref({})
+    let activeChat = ref({})
     const user = ref({})
     const users = ref({})
 
@@ -37,9 +37,8 @@ export const useChatStore = defineStore('chat', () => {
 
             if (chatId === 'new') {
                 data.user = activeChat.value.users[0]
-                await axios.post(`/chats`, data)
                 textInput.value = ''
-                return;
+                return await axios.post(`/chats`, data)
             }
 
             await axios.post(`/chats/${chatId}/messages`, data)

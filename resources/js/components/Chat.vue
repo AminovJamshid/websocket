@@ -79,7 +79,6 @@ onMounted(async () => {
 
     window.Echo.private(`user.${store.user.value.id}`)
         .listen('GotNewChat', data=>{
-            console.log(data)
             store.chats.push(data.room)
         })
 

@@ -29,7 +29,7 @@ class HandleNewChat
             'text'    => $request->text
         ]);
 
-        $chat = $chat->with('users')->first();
+        $chat = $chat->with('users')->latest()->first();
 
         // Yangi message haqida xabar berish
         broadcast(new GotNewChat($chat));

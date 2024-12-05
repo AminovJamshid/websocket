@@ -1,4 +1,14 @@
 <script setup>
+import {useChatStore} from "../stores/store.js";
+
+const store = useChatStore()
+
+const getUserNameFromChat = (chat) => {
+    const anotherUsers = chat.users.filter(user => user.id !== store.user.value.id)
+    return anotherUsers[0].name;
+}
+
+const chatUser = getUserNameFromChat(store.activeChat)
 
 </script>
 
@@ -9,7 +19,7 @@
             <img src="assets/images/client/01.jpg"
                  class="size-11 rounded-full shadow dark:shadow-gray-700" alt="">
             <div class="overflow-hidden ms-3">
-                <a href="#" class="block font-semibold text-truncate">Cristino Murfy</a>
+                <a href="#" class="block font-semibold text-truncate">{{chatUser}}</a>
                 <span class="text-slate-400 flex items-center text-sm"><span
                     class="bg-green-600 text-white text-[10px] font-bold rounded-full size-2 me-1"></span> Online</span>
             </div>
